@@ -1,5 +1,6 @@
-from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
+
 from app.db.utils.init_db import create_tables
 from app.routers.auth import router as authRouter
 
