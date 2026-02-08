@@ -1,8 +1,8 @@
 import jwt
+import secrets
 from jwt import PyJWTError
 from datetime import datetime, timezone, timedelta
 from fastapi.security import OAuth2PasswordBearer
-
 from app.core.config import config
 
 
@@ -32,3 +32,7 @@ class AuthHandler:
         except PyJWTError:
             print("Unable to decode the token")
             return None
+
+    @staticmethod
+    def create_refresh_token() -> str:
+        return secrets.token_urlsafe(64)
