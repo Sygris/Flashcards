@@ -36,6 +36,12 @@ class UserRepository(BaseRepository):
 
         return user
 
+    def get_user_by_refresh_token(self, refresh_token: str) -> User | None:
+        stmt = select(User).where(User.refresh_token == refresh_token)
+        user = self.session.execute(stmt).scalar_one_or_none()
+
+        return user
+
     def update_user(self, user: User, updates: dict) -> User:
         for name, value in updates.items():
             setattr(user, name, value)
