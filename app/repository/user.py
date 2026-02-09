@@ -2,11 +2,11 @@ from sqlalchemy import select
 from .base import BaseRepository
 
 from app.db.models.user import User
-from app.db.schemas.user import UserCreate, UserUpdate
+from app.db.schemas.user import UserIn
 
 
 class UserRepository(BaseRepository):
-    def create_user(self, user_data: UserCreate) -> User:
+    def create_user(self, user_data: UserIn) -> User:
         new_user = User(**user_data.model_dump(exclude_none=True))
 
         try:
@@ -18,12 +18,6 @@ class UserRepository(BaseRepository):
 
         self.session.refresh(new_user)
         return new_user
-
-    def user_exist_by_email(self, email: str) -> bool:
-        stmt = select(User).where(User.email == email)
-        user = self.session.execute(stmt).scalar_one_or_none()
-
-        return user is not None
 
     def get_user_by_email(self, email: str) -> User | None:
         stmt = select(User).where(User.email == email)

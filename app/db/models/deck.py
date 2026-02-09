@@ -3,6 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.db.database import Base
 
 
+# Deck ORM model (db table)
 class Deck(Base):
     __tablename__ = "decks"
 

@@ -4,6 +4,8 @@ from pydantic_settings import BaseSettings
 load_dotenv()
 
 
+# Basically a settings class where it centrailizes every "setting"
+# It will load from .env
 class Config(BaseSettings):
     app_name: str = "Flashcards"
     debug: bool = False
@@ -15,6 +17,7 @@ class Config(BaseSettings):
     jwt_algorithm: str = ""
     access_token_expire_minutes: int = 30
 
+    # It builds the postgresql connection string
     @property
     def db_url(self):
         return f"postgresql://{self.db_user}:{self.db_password}@localhost:5432/{self.db_name}"

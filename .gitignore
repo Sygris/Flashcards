@@ -1,3 +1,6 @@
 .env
+Flashcards/
 
 __pycache__/
+pyrightconfig.json
+
