@@ -2,22 +2,19 @@ from sqlalchemy import select
 from .base import BaseRepository
 
 from app.db.models.user import User
-from app.db.schemas.user import UserIn
 
 
 class UserRepository(BaseRepository):
-    def create_user(self, user_data: UserIn) -> User:
-        new_user = User(**user_data.model_dump(exclude_none=True))
-
+    def create_user(self, user: User) -> User:
         try:
-            self.session.add(new_user)
+            self.session.add(user)
             self.session.commit()
         except Exception:
             self.session.rollback()
             raise
 
-        self.session.refresh(new_user)
-        return new_user
+        self.session.refresh(user)
+        return user
 
     def get_user_by_email(self, email: str) -> User | None:
         stmt = select(User).where(User.email == email)

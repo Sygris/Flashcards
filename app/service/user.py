@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from app.repository.user import UserRepository
 from app.db.models.user import User
 from app.db.schemas.user import (
-    UserOut,
     UserIn,
     UserUpdateIn,
 )
@@ -14,15 +13,20 @@ class UserService:
     def __init__(self, session: Session):
         self._user_repository = UserRepository(session)
 
-    def create_user(self, user_details: UserIn) -> UserOut:
+    def create_user(self, user_details: UserIn) -> User:
         if self._user_repository.get_user_by_email(user_details.email):
-            raise HTTPException(status_code=400, detail="Please Login")
+            raise HTTPException(status_code=409, detail="Email already exists")
 
         hashed_password = HashHelper.hash_password(user_details.password)
-        user_details.password = hashed_password
 
-        user = self._user_repository.create_user(user_details)
-        return UserOut.model_validate(user)
+        user = User(
+            email=user_details.email,
+            password=hashed_password,
+            nickname=user_details.nickname,
+        )
+
+        user = self._user_repository.create_user(user)
+        return user
 
     def update_user(self, user: User, updates: UserUpdateIn) -> User:
         update_data = updates.model_dump(exclude_unset=True)
@@ -45,4 +49,4 @@ class UserService:
         if user:
             return user
 
-        raise HTTPException(status_code=400, detail="User is not available")
+        raise HTTPException(status_code=404, detail="User not found")
