@@ -14,7 +14,7 @@ router = APIRouter()
 # User Profile
 @router.get("/profile", response_model=UserOut, status_code=200)
 def profile(current_user: User = Depends(get_current_user)):
-    return {"Hello": current_user.nickname}
+    return current_user
 
 
 # Update User details (email, password and/or nickname)
