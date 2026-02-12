@@ -34,3 +34,22 @@ class DeckService:
             return decks
 
         raise HTTPException(status_code=404, detail="No deck found")
+
+    def update_deck(self, deck_id: int, user: User, updates: DeckIn) -> Deck:
+        deck = self.get_deck_by_id(deck_id, user)
+
+        if deck is None:
+            raise HTTPException(status_code=404, detail="Deck not found")
+
+        updated_deck = self._deck_repository.update_deck(
+            deck, updates.model_dump(exclude_none=True)
+        )
+        return updated_deck
+
+    def delete_deck(self, deck_id: int, user: User):
+        deck = self.get_deck_by_id(deck_id, user)
+
+        if deck is None:
+            raise HTTPException(status_code=404, detail="Deck not found")
+
+        return self._deck_repository.delete_deck(deck)

@@ -1,4 +1,4 @@
-from sqlalchemy import Sequence, select
+from sqlalchemy import select
 from .base import BaseRepository
 from app.db.models.deck import Deck
 
@@ -42,6 +42,7 @@ class DeckRepository(BaseRepository):
         return deck
 
     def update_deck(self, deck: Deck, updates: dict):
+        print(updates)
         for name, value in updates.items():
             setattr(deck, name, value)
 

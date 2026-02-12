@@ -9,6 +9,13 @@ from app.service.deck import DeckService
 router = APIRouter()
 
 
+@router.get("/", response_model=list[DeckOut], status_code=200)
+def get_decks(
+    session: Session = Depends(get_db), user: User = Depends(get_current_user)
+):
+    return DeckService(session).get_all_decks(user)
+
+
 @router.post("/create", response_model=DeckOut, status_code=200)
 def create_deck(
     deck_data: DeckIn,
@@ -27,8 +34,20 @@ def get_deck(
     return DeckService(session).get_deck_by_id(deck_id, user)
 
 
-@router.get("/", response_model=list[DeckOut], status_code=200)
-def get_decks(
-    session: Session = Depends(get_db), user: User = Depends(get_current_user)
+@router.patch("/update/{deck_id}", response_model=DeckOut, status_code=200)
+def update_deck(
+    deck_id: int,
+    updates: DeckIn,
+    session: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
-    return DeckService(session).get_all_decks(user)
+    return DeckService(session).update_deck(deck_id, user, updates)
+
+
+@router.delete("/{deck_id}")
+def delete_deck(
+    deck_id: int,
+    session: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    return DeckService(session).delete_deck(deck_id, user)
