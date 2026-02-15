@@ -13,7 +13,7 @@ router = APIRouter()
 def get_decks(
     session: Session = Depends(get_db), user: User = Depends(get_current_user)
 ):
-    return DeckService(session).get_all_decks(user)
+    return DeckService(session).get_all_decks(user.id)
 
 
 @router.post("/", response_model=DeckOut, status_code=201)
@@ -23,7 +23,7 @@ def create_deck(
     user: User = Depends(get_current_user),
 ):
     try:
-        return DeckService(session).create_deck(deck_data, user)
+        return DeckService(session).create_deck(deck_data, user.id)
     except ValueError:
         raise HTTPException(status_code=400, detail="Deck already exists")
 
@@ -34,7 +34,7 @@ def get_deck(
     session: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    return DeckService(session).get_deck_by_id(deck_id, user)
+    return DeckService(session).get_deck_by_id(deck_id, user.id)
 
 
 @router.patch("/{deck_id}", response_model=DeckOut, status_code=200)
@@ -45,7 +45,7 @@ def update_deck(
     user: User = Depends(get_current_user),
 ):
     try:
-        return DeckService(session).update_deck(deck_id, user, updates)
+        return DeckService(session).update_deck(deck_id, user.id, updates)
     except LookupError:
         raise HTTPException(status_code=400, detail="Deck not found")
 
@@ -57,6 +57,6 @@ def delete_deck(
     user: User = Depends(get_current_user),
 ):
     try:
-        return DeckService(session).delete_deck(deck_id, user)
+        return DeckService(session).delete_deck(deck_id, user.id)
     except LookupError:
         raise HTTPException(status_code=400, detail="Deck not found")

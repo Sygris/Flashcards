@@ -1,3 +1,4 @@
+from typing import Sequence
 from sqlalchemy import select
 from .base import BaseRepository
 from app.db.models.deck import Deck
@@ -22,8 +23,8 @@ class DeckRepository(BaseRepository):
 
         return deck
 
-    def list_decks_by_owner(self, owner_id: int) -> list[Deck]:
-        stmt = select(Deck).where(Deck.owner_id == owner_id)
+    def list_decks_by_owner(self, user_id: int) -> Sequence[Deck]:
+        stmt = select(Deck).where(Deck.owner_id == user_id)
         return self.session.execute(stmt).scalars().all()
 
     def get_user_deck_by_title(self, deck_title: str, user_id: int) -> Deck | None:
