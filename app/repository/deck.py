@@ -15,18 +15,9 @@ class DeckRepository(BaseRepository):
 
         return deck
 
-    def get_deck_by_id(self, deck_id: int) -> Deck | None:
-        return self.session.get(Deck, deck_id)
-
     def get_users_deck_by_id(self, deck_id: int, user_id: int) -> Deck | None:
         stmt = select(Deck).where(Deck.id == deck_id)
         stmt = stmt.where(Deck.owner_id == user_id)
-        deck = self.session.execute(stmt).scalar_one_or_none()
-
-        return deck
-
-    def get_deck_by_title(self, deck_title: str) -> Deck | None:
-        stmt = select(Deck).where(Deck.title == deck_title)
         deck = self.session.execute(stmt).scalar_one_or_none()
 
         return deck
@@ -36,10 +27,16 @@ class DeckRepository(BaseRepository):
         return self.session.execute(stmt).scalars().all()
 
     def get_user_deck_by_title(self, deck_title: str, user_id: int) -> Deck | None:
-        stmt = select(Deck).where(Deck.title == deck_title and Deck.owner_id == user_id)
+        stmt = select(Deck).where(Deck.title == deck_title, Deck.owner_id == user_id)
         deck = self.session.execute(stmt).scalar_one_or_none()
 
         return deck
+
+    def deck_belongs_to_user(self, deck_id: int, user_id: int) -> bool:
+        stmt = select(Deck).where(Deck.id == deck_id, Deck.owner_id == user_id)
+        deck = self.session.execute(stmt).scalar_one_or_none()
+
+        return True if deck is not None else False
 
     def update_deck(self, deck: Deck, updates: dict):
         print(updates)
