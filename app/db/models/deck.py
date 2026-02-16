@@ -13,5 +13,5 @@ class Deck(Base):
     owner_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     created_at: Mapped[DateTime] = mapped_column(DateTime, default=func.now())
     updated_at: Mapped[DateTime] = mapped_column(
-        DateTime, default=func.now(), updated_at=func.now()
+        DateTime, default=func.now(), onupdate=func.now()
     )
