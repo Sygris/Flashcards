@@ -4,6 +4,8 @@ from app.db.database import Base
 
 
 class Flashcard(Base):
+    __tablename__ = "flashcards"
+
     id: Mapped[int] = mapped_column(primary_key=True)
     question: Mapped[str] = mapped_column(String)
     answer: Mapped[str] = mapped_column(String)
