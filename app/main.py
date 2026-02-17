@@ -5,6 +5,7 @@ from app.db.utils.init_db import create_tables
 from app.routers.auth import router as authRouter
 from app.routers.user import router as userRouter
 from app.routers.deck import router as deckRouter
+from app.routers.flashcard import router as flashcardRouter
 
 
 # Controls the life cycle of the app
@@ -26,6 +27,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(authRouter, prefix="/auth", tags=["auth"])
 app.include_router(userRouter, prefix="/user", tags=["user"])
 app.include_router(deckRouter, prefix="/deck", tags=["deck"])
+app.include_router(flashcardRouter, prefix="/flashcard", tags=["flashcard"])
 
 
 # Endpoint used to just check if its running
