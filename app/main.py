@@ -26,8 +26,10 @@ app = FastAPI(lifespan=lifespan)
 # Add the routers to the application
 app.include_router(authRouter, prefix="/auth", tags=["auth"])
 app.include_router(userRouter, prefix="/user", tags=["user"])
-app.include_router(deckRouter, prefix="/deck", tags=["deck"])
-app.include_router(flashcardRouter, prefix="/flashcard", tags=["flashcard"])
+app.include_router(deckRouter, prefix="/decks", tags=["deck"])
+app.include_router(
+    flashcardRouter, prefix="/decks/{deck_id}/flashcards", tags=["flashcard"]
+)
 
 
 # Endpoint used to just check if its running

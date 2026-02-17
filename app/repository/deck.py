@@ -40,7 +40,6 @@ class DeckRepository(BaseRepository):
         return True if deck is not None else False
 
     def update_deck(self, deck: Deck, updates: dict):
-        print(updates)
         for name, value in updates.items():
             setattr(deck, name, value)
 
