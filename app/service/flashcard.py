@@ -17,8 +17,9 @@ class FlashcardService:
         if deck is None:
             raise LookupError("Deck not found")
 
-        flashcard = Flashcard(**flashcard_data.model_dump(exclude_unset=True))
-        flashcard.deck_id = deck.id
+        flashcard = Flashcard(
+            **flashcard_data.model_dump(exclude_unset=True), deck_id=deck_id
+        )
 
         return self._flashcard_repository.create_flashcard(flashcard)
 
@@ -28,4 +29,19 @@ class FlashcardService:
         if deck is None:
             raise LookupError("Deck not found")
 
-        return self._flashcard_repository.list_flashcards(deck_id)
+        return self._flashcard_repository.list_flashcards(deck_id, user_id)
+
+    def get_flashcard(self, flashcard_id: int, deck_id: int, user_id: int):
+        deck = self._deck_repository.get_users_deck_by_id(deck_id, user_id)
+
+        if deck is None:
+            raise LookupError("Deck not found")
+
+        flashcard = self._flashcard_repository.get_flashcard(
+            flashcard_id, deck_id, user_id
+        )
+
+        if flashcard is None:
+            raise LookupError("Flashcard not found")
+
+        return flashcard

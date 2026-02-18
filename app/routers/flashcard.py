@@ -10,7 +10,7 @@ from app.service.flashcard import FlashcardService
 router = APIRouter()
 
 
-@router.post("/", response_model=FlashcardOut, status_code=200)
+@router.post("/", response_model=FlashcardOut, status_code=201)
 def create_flashcard(
     flashcard_data: FlashcardInCreate,
     deck_id: int,
@@ -25,15 +25,6 @@ def create_flashcard(
         raise HTTPException(status_code=400, detail="Deck not found")
 
 
-@router.get("/{flashcard_id}")
-def get_flashcard(
-    flashcard_id: int,
-    session: Session = Depends(get_db),
-    user: User = Depends(get_current_user),
-):
-    pass
-
-
 @router.get("/", response_model=list[FlashcardOut], status_code=200)
 def list_flashcards(
     deck_id: int,
@@ -44,6 +35,19 @@ def list_flashcards(
         return FlashcardService(session).list_flashcards(deck_id, user.id)
     except LookupError:
         raise HTTPException(status_code=404, detail="Deck not found")
+
+
+@router.get("/{flashcard_id}", response_model=FlashcardOut, status_code=200)
+def get_flashcard(
+    deck_id: int,
+    flashcard_id: int,
+    session: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    try:
+        return FlashcardService(session).get_flashcard(flashcard_id, deck_id, user.id)
+    except LookupError:
+        raise HTTPException(status_code=400, detail="Deck or flashcard not found")
 
 
 @router.patch("/{flashcard_id}")

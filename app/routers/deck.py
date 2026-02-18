@@ -34,7 +34,10 @@ def get_deck(
     session: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    return DeckService(session).get_deck_by_id(deck_id, user.id)
+    try:
+        return DeckService(session).get_deck_by_id(deck_id, user.id)
+    except LookupError:
+        raise HTTPException(status_code=400, detail="Deck not found")
 
 
 @router.patch("/{deck_id}", response_model=DeckOut, status_code=200)
