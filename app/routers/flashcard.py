@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.db.database import get_db
 from app.db.models.user import User
-from app.db.schemas.flashcard import FlashcardInCreate, FlashcardOut
+from app.db.schemas.flashcard import FlashcardInCreate, FlashcardInUpdate, FlashcardOut
 from app.core.security.dependencies import get_current_user
 from app.service.flashcard import FlashcardService
 
@@ -50,19 +50,32 @@ def get_flashcard(
         raise HTTPException(status_code=400, detail="Deck or flashcard not found")
 
 
-@router.patch("/{flashcard_id}")
+@router.patch("/{flashcard_id}", response_model=FlashcardOut, status_code=201)
 def update_flashcard(
+    deck_id: int,
     flashcard_id: int,
+    updates: FlashcardInUpdate,
     session: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    pass
+    try:
+        return FlashcardService(session).update_flashcard(
+            updates, flashcard_id, deck_id, user.id
+        )
+    except LookupError:
+        raise HTTPException(status_code=404, detail="Deck or flashcard not found")
 
 
 @router.delete("/{flashcard_id}")
 def delete_flashcard(
+    deck_id: int,
     flashcard_id: int,
     session: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    pass
+    try:
+        return FlashcardService(session).delete_flashcard(
+            flashcard_id, deck_id, user.id
+        )
+    except LookupError:
+        raise HTTPException(status_code=404, detail="Deck or Flashcard not found")
