@@ -21,7 +21,7 @@ class DeckRepository(BaseRepository):
     def get_users_deck_by_id(self, deck_id: int, user_id: int) -> Deck | None:
         stmt = (
             select(Deck, func.count(Flashcard.id).label("flashcard_count"))
-            .join(Flashcard, Flashcard.deck_id == Deck.id)
+            .outerjoin(Flashcard, Flashcard.deck_id == Deck.id)
             .where(Deck.id == deck_id, Deck.owner_id == user_id)
             .group_by(Deck.id)
         )
@@ -33,7 +33,7 @@ class DeckRepository(BaseRepository):
     def list_decks_by_owner(self, user_id: int) -> Sequence[Deck]:
         stmt = (
             select(Deck)
-            .join(Flashcard, Flashcard.deck_id == Deck.id)
+            .outerjoin(Flashcard, Flashcard.deck_id == Deck.id)
             .where(Deck.owner_id == user_id)
             .group_by(Deck.id)
         )
@@ -42,7 +42,7 @@ class DeckRepository(BaseRepository):
     def get_user_deck_by_title(self, deck_title: str, user_id: int) -> Deck | None:
         stmt = (
             select(Deck)
-            .join(Flashcard, Flashcard.deck_id == Deck.id)
+            .outerjoin(Flashcard, Flashcard.deck_id == Deck.id)
             .where(Deck.title == deck_title, Deck.owner_id == user_id)
             .group_by(Deck.id)
         )
