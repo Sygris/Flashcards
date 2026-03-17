@@ -4,8 +4,8 @@ from sqlalchemy.orm import Session
 from app.core.security.dependencies import get_current_user
 from app.db.database import get_db
 from app.db.models.user import User
-from app.db.schemas.user import UserIn, UserLogin, UserOut
-from app.db.schemas.auth import UserWithToken, RefreshRequest
+from app.schemas.user import UserIn, UserLogin, UserOut
+from app.schemas.auth import UserWithToken, RefreshRequest
 from app.service.user import UserService
 from app.service.auth import AuthService
 

@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.db.database import get_db
 from app.db.models.user import User
-from app.db.schemas.user import UserOut, UserUpdateIn
+from app.schemas.user import UserOut, UserUpdateIn
 from app.core.security.dependencies import get_current_user
 from app.service.user import UserService
 

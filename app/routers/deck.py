@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.core.security.dependencies import get_current_user
 from app.db.database import get_db
 from app.db.models.user import User
-from app.db.schemas.deck import DeckIn, DeckOut
+from app.schemas.deck import DeckIn, DeckOut
 from app.service.deck import DeckService
 
 router = APIRouter()
@@ -25,7 +25,7 @@ def create_deck(
     try:
         return DeckService(session).create_deck(deck_data, user.id)
     except ValueError:
-        raise HTTPException(status_code=400, detail="Deck already exists")
+        raise HTTPException(status_code=404, detail="Deck already exists")
 
 
 @router.get("/{deck_id}", response_model=DeckOut, status_code=200)
@@ -37,7 +37,7 @@ def get_deck(
     try:
         return DeckService(session).get_deck_by_id(deck_id, user.id)
     except LookupError:
-        raise HTTPException(status_code=400, detail="Deck not found")
+        raise HTTPException(status_code=404, detail="Deck not found")
 
 
 @router.patch("/{deck_id}", response_model=DeckOut, status_code=200)
@@ -50,7 +50,7 @@ def update_deck(
     try:
         return DeckService(session).update_deck(deck_id, user.id, updates)
     except LookupError:
-        raise HTTPException(status_code=400, detail="Deck not found")
+        raise HTTPException(status_code=404, detail="Deck not found")
 
 
 @router.delete("/{deck_id}")
@@ -62,4 +62,4 @@ def delete_deck(
     try:
         return DeckService(session).delete_deck(deck_id, user.id)
     except LookupError:
-        raise HTTPException(status_code=400, detail="Deck not found")
+        raise HTTPException(status_code=404, detail="Deck not found")

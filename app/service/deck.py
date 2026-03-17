@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.db.models.deck import Deck
-from app.db.schemas.deck import DeckIn
+from app.schemas.deck import DeckIn
 from app.repository.deck import DeckRepository
 
 
@@ -12,7 +12,7 @@ class DeckService:
         if self._deck_repository.get_user_deck_by_title(deck_data.title, user_id):
             raise ValueError("Deck already exists")
 
-        deck = Deck(**deck_data.model_dump(exclude_none=True))
+        deck = Deck(**deck_data.model_dump(exclude_unset=True))
         deck.owner_id = user_id
 
         return self._deck_repository.create_deck(deck)
@@ -38,7 +38,7 @@ class DeckService:
             raise ValueError("Deck already exists")
 
         updated_deck = self._deck_repository.update_deck(
-            deck, updates.model_dump(exclude_none=True)
+            deck, updates.model_dump(exclude_unset=True)
         )
         return updated_deck
 

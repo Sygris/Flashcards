@@ -1,11 +1,14 @@
+from typing import Sequence
+
+from sqlalchemy.orm import Session
 from app.db.models.flashcard import Flashcard
 from app.repository.deck import DeckRepository
 from app.repository.flashcard import FlashcardRepository
-from app.db.schemas.flashcard import FlashcardInCreate, FlashcardInUpdate
+from app.schemas.flashcard import FlashcardInCreate, FlashcardInUpdate
 
 
 class FlashcardService:
-    def __init__(self, session):
+    def __init__(self: FlashcardService, session: Session):
         self._flashcard_repository = FlashcardRepository(session)
         self._deck_repository = DeckRepository(session)
 
@@ -23,7 +26,7 @@ class FlashcardService:
 
         return self._flashcard_repository.create_flashcard(flashcard)
 
-    def list_flashcards(self, deck_id: int, user_id: int):
+    def list_flashcards(self, deck_id: int, user_id: int) -> Sequence[Flashcard]:
         deck = self._deck_repository.get_users_deck_by_id(deck_id, user_id)
 
         if deck is None:
@@ -31,12 +34,7 @@ class FlashcardService:
 
         return self._flashcard_repository.list_flashcards(deck_id, user_id)
 
-    def get_flashcard(self, flashcard_id: int, deck_id: int, user_id: int):
-        deck = self._deck_repository.get_users_deck_by_id(deck_id, user_id)
-
-        if deck is None:
-            raise LookupError("Deck not found")
-
+    def get_flashcard(self, flashcard_id: int, deck_id: int, user_id: int) -> Flashcard:
         flashcard = self._flashcard_repository.get_flashcard(
             flashcard_id, deck_id, user_id
         )
@@ -71,7 +69,7 @@ class FlashcardService:
 
         return update_flashcard
 
-    def delete_flashcard(self, flashcard_id: int, deck_id: int, user_id: int):
+    def delete_flashcard(self, flashcard_id: int, deck_id: int, user_id: int) -> None:
         deck = self._deck_repository.get_users_deck_by_id(deck_id, user_id)
 
         if deck is None:
