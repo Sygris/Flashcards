@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from app.repository.user import UserRepository
 from app.db.models.user import User
-from app.db.schemas.user import (
+from app.schemas.user import (
     UserIn,
     UserUpdateIn,
 )

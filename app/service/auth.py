@@ -5,8 +5,8 @@ from app.repository.user import UserRepository
 from app.core.security.auth_handler import AuthHandler
 from app.core.security.hash_helper import HashHelper
 from app.db.models.user import User
-from app.db.schemas.user import UserLogin
-from app.db.schemas.auth import UserWithToken
+from app.schemas.user import UserLogin
+from app.schemas.auth import UserWithToken
 
 
 class AuthService:

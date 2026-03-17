@@ -6,10 +6,11 @@ from fastapi.security import OAuth2PasswordBearer
 from app.core.config import config
 
 
+oauth2_scheme = OAuth2PasswordBearer("/auth/login")
+
+
 # Class to handle the JWT creation and reading
 class AuthHandler:
-    oauth2 = OAuth2PasswordBearer("/auth/login")
-
     # Creates the token and returns it
     @staticmethod
     def create_token(data: dict) -> str:
