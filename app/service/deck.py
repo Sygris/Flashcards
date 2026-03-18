@@ -18,15 +18,24 @@ class DeckService:
         return self._deck_repository.create_deck(deck)
 
     def get_deck_by_id(self, deck_id: int, user_id: int) -> Deck:
-        deck = self._deck_repository.get_users_deck_by_id(deck_id, user_id)
+        result = self._deck_repository.get_users_deck_by_id(deck_id, user_id)
 
-        if deck is None:
+        if result is None:
             raise LookupError("Deck not found")
+
+        deck = result[0]
+        deck.flashcard_count = result[1]
 
         return deck
 
     def get_all_decks(self, user_id: int) -> list[Deck]:
-        decks = self._deck_repository.list_decks_by_owner(user_id)
+        results = self._deck_repository.list_decks_by_owner(user_id)
+
+        decks = []
+        for deck, count in results:
+            deck.flashcard_count = count
+            decks.append(deck)
+
         return list(decks)
 
     def update_deck(self, deck_id: int, user_id: int, updates: DeckIn) -> Deck:
