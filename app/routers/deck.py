@@ -35,7 +35,7 @@ def get_deck(
     user: User = Depends(get_current_user),
 ):
     try:
-        return DeckService(session).get_deck_by_id(deck_id, user.id)
+        return DeckService(session).get_deck_details(deck_id, user.id)
     except LookupError:
         raise HTTPException(status_code=404, detail="Deck not found")
 

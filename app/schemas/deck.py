@@ -11,4 +11,3 @@ class DeckOut(BaseModel):
     title: str
     description: str | None = None
     flashcard_count: int = 0
-    # TODO add flashcard count

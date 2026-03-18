@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.db.models.deck import Deck
-from app.schemas.deck import DeckIn
+from app.schemas.deck import DeckIn, DeckOut
 from app.repository.deck import DeckRepository
 
 
@@ -17,29 +17,47 @@ class DeckService:
 
         return self._deck_repository.create_deck(deck)
 
-    def get_deck_by_id(self, deck_id: int, user_id: int) -> Deck:
+    def get_deck_details(self, deck_id: int, user_id: int) -> DeckOut:
         result = self._deck_repository.get_users_deck_by_id(deck_id, user_id)
 
         if result is None:
             raise LookupError("Deck not found")
 
-        deck = result[0]
-        deck.flashcard_count = result[1]
+        deck = DeckOut(
+            id=result[0].id,
+            title=result[0].title,
+            description=result[0].description,
+            flashcard_count=result[1],
+        )
 
         return deck
 
-    def get_all_decks(self, user_id: int) -> list[Deck]:
+    def _get_deck_by_id(self, deck_id: int, user_id: int) -> Deck:
+        result = self._deck_repository.get_users_deck_by_id(deck_id, user_id)
+
+        if result is None:
+            raise LookupError("Deck not found")
+
+        return result[0]
+
+    def get_all_decks(self, user_id: int) -> list[DeckOut]:
         results = self._deck_repository.list_decks_by_owner(user_id)
 
         decks = []
         for deck, count in results:
-            deck.flashcard_count = count
-            decks.append(deck)
+            decks.append(
+                DeckOut(
+                    id=deck.id,
+                    title=deck.title,
+                    description=deck.description,
+                    flashcard_count=count,
+                )
+            )
 
-        return list(decks)
+        return decks
 
     def update_deck(self, deck_id: int, user_id: int, updates: DeckIn) -> Deck:
-        deck = self.get_deck_by_id(deck_id, user_id)
+        deck = self._get_deck_by_id(deck_id, user_id)
 
         if updates.title and self._deck_repository.get_user_deck_by_title(
             updates.title, user_id
@@ -52,5 +70,5 @@ class DeckService:
         return updated_deck
 
     def delete_deck(self, deck_id: int, user_id: int):
-        deck = self.get_deck_by_id(deck_id, user_id)
+        deck = self._get_deck_by_id(deck_id, user_id)
         return self._deck_repository.delete_deck(deck)
