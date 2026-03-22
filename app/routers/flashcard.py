@@ -23,6 +23,8 @@ def create_flashcard(
         )
     except LookupError:
         raise HTTPException(status_code=404, detail="Deck not found")
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Flashcard already exists")
 
 
 @router.get("/", response_model=list[FlashcardOut], status_code=200)

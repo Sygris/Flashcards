@@ -1,5 +1,4 @@
 from sqlalchemy import select
-from sqlalchemy.sql.coercions import expect
 from app.db.models.deck import Deck
 from app.db.models.flashcard import Flashcard
 from .base import BaseRepository
@@ -42,6 +41,23 @@ class FlashcardRepository(BaseRepository):
         flashcard = self.session.scalars(stmt).one_or_none()
 
         return flashcard
+
+    def does_flashcard_exist(
+        self, deck_id: int, user_id: int, question: str, answer: str
+    ) -> bool:
+        stmt = (
+            select(Flashcard)
+            .join(Deck, Flashcard.deck_id == Deck.id)
+            .where(
+                Deck.id == deck_id,
+                Deck.owner_id == user_id,
+                Flashcard.question == question,
+                Flashcard.answer == answer,
+            )
+        )
+
+        flashcard = self.session.scalars(stmt).first()
+        return flashcard is not None
 
     def update_flashcard(self, flashcard: Flashcard, updates: dict):
         for name, value in updates.items():

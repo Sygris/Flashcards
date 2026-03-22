@@ -20,6 +20,11 @@ class FlashcardService:
         if deck is None:
             raise LookupError("Deck not found")
 
+        if self._flashcard_repository.does_flashcard_exist(
+            deck_id, user_id, flashcard_data.question, flashcard_data.answer
+        ):
+            raise ValueError("Flashcard already exists")
+
         flashcard = Flashcard(
             **flashcard_data.model_dump(exclude_unset=True), deck_id=deck_id
         )
@@ -53,18 +58,19 @@ class FlashcardService:
     ) -> Flashcard:
         deck = self._deck_repository.get_users_deck_by_id(deck_id, user_id)
 
+        print(deck)
         if deck is None:
             raise LookupError("Deck not found")
 
         flashcard = self._flashcard_repository.get_flashcard(
-            flashcard_id, deck.id, user_id
+            flashcard_id, deck_id, user_id
         )
 
         if flashcard is None:
             raise LookupError("Flashcard not found")
 
         update_flashcard = self._flashcard_repository.update_flashcard(
-            flashcard, updates.model_dump(exclude_none=True)
+            flashcard, updates.model_dump(exclude_unset=True)
         )
 
         return update_flashcard
