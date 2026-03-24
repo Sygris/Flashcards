@@ -12,5 +12,5 @@ def test_read_health():
 
 def test_read_health_fail():
     response = client.get("/health")
-    assert response.status_code == 200
+    assert response.status_code == 400
     assert response.json() == {"health": "ok"}

@@ -1,7 +1,4 @@
-from dotenv import load_dotenv
-from pydantic_settings import BaseSettings
-
-load_dotenv()
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 # Basically a settings class where it centrailizes every "setting"
@@ -21,6 +18,8 @@ class Config(BaseSettings):
     @property
     def db_url(self):
         return f"postgresql://{self.db_user}:{self.db_password}@localhost:5432/{self.db_name}"
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 
 config = Config()
