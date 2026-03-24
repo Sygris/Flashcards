@@ -8,6 +8,7 @@ class Config(BaseSettings):
     debug: bool = False
     db_user: str = ""
     db_password: str = ""
+    db_port: str = ""
     db_name: str = "flashcards"
 
     jwt_secret: str = ""
@@ -17,7 +18,7 @@ class Config(BaseSettings):
     # It builds the postgresql connection string
     @property
     def db_url(self):
-        return f"postgresql://{self.db_user}:{self.db_password}@localhost:5432/{self.db_name}"
+        return f"postgresql://{self.db_user}:{self.db_password}@localhost:{self.db_port}/{self.db_name}"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
