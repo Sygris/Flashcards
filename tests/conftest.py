@@ -1,7 +1,9 @@
-import json
 import os
 import pytest
 from fastapi.testclient import TestClient
+
+os.environ["DB_NAME"] = "flashcards_test"
+os.environ["DB_PORT"] = "5433"
 
 from app.main import app
 from app.db.database import SessionLocal
@@ -9,9 +11,6 @@ from app.db.models.deck import Deck
 from app.db.models.flashcard import Flashcard
 from app.db.models.user import User
 from app.db.utils.init_db import create_tables
-
-os.environ["DB_NAME"] = "flashcards_test"
-os.environ["DB_PORT"] = "5433"
 
 
 @pytest.fixture
