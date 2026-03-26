@@ -1,3 +1,6 @@
+import pytest
+
+
 def test_signup(db_setup, client):
     response = client.post(
         "/auth/signup", json={"email": "user@gmail.com", "password": "password"}
@@ -21,3 +24,38 @@ def test_signup_duplicate_email(db_setup, client):
 
     assert response.status_code == 409
     assert response.json()["detail"] == "Email already exists"
+
+
+def test_login_success(db_setup, client):
+    signup_response = client.post(
+        "/auth/signup", json={"email": "user@gmail.com", "password": "password"}
+    )
+
+    if signup_response.status_code != 201:
+        pytest.fail()
+
+    login_response = client.post(
+        "/auth/login", json={"email": "user@gmail.com", "password": "password"}
+    )
+
+    assert login_response.status_code == 200
+    response_data = login_response.json()
+    assert isinstance(response_data["token"], str)
+    assert isinstance(response_data["refresh_token"], str)
+
+
+def test_login_wrong_password(db_setup, client):
+    signup_response = client.post(
+        "/auth/signup", json={"email": "user@gmail.com", "password": "password"}
+    )
+
+    if signup_response.status_code != 201:
+        pytest.fail()
+
+    login_response = client.post(
+        "/auth/login", json={"email": "user@gmail.com", "password": "wrongPWD"}
+    )
+
+    assert login_response.status_code == 400
+    response_data = login_response.json()
+    assert response_data["detail"] == "Please check your Credentials"
