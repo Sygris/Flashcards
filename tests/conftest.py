@@ -34,13 +34,18 @@ def client():
 
 
 @pytest.fixture
-def access_token(db_setup, client):
+def registered_user(db_setup, client):
     response = client.post(
         "/auth/signup", json={"email": "user@gmail.com", "password": "password"}
     )
     if response.status_code != 201:
         pytest.fail("Failed to signup!")
 
+    return response
+
+
+@pytest.fixture
+def access_token(registered_user, client):
     login_response = client.post(
         "/auth/login", json={"email": "user@gmail.com", "password": "password"}
     )
