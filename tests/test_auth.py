@@ -1,6 +1,3 @@
-import pytest
-
-
 def test_signup(db_setup, client):
     response = client.post(
         "/auth/signup", json={"email": "user@gmail.com", "password": "password"}

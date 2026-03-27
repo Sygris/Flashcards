@@ -54,3 +54,17 @@ def access_token(registered_user, client):
         pytest.fail("Failed to login!")
 
     return login_response.json()["token"]
+
+
+@pytest.fixture
+def deck(access_token, client):
+    response = client.post(
+        "/decks/",
+        headers={"Authorization": f"Bearer {access_token}"},
+        json={"title": "Fixtures", "description": "Deck created from conftest"},
+    )
+
+    if response.status_code != 201:
+        pytest.fail("Failed to create deck!")
+
+    return response.json()
