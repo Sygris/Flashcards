@@ -25,7 +25,7 @@ def create_deck(
     try:
         return DeckService(session).create_deck(deck_data, user.id)
     except ValueError:
-        raise HTTPException(status_code=404, detail="Deck already exists")
+        raise HTTPException(status_code=409, detail="Deck already exists")
 
 
 @router.get("/{deck_id}", response_model=DeckOut, status_code=200)
