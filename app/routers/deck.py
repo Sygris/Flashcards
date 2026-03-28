@@ -51,6 +51,8 @@ def update_deck(
         return DeckService(session).update_deck(deck_id, user.id, updates)
     except LookupError:
         raise HTTPException(status_code=404, detail="Deck not found")
+    except ValueError:
+        raise HTTPException(status_code=409, detail="Deck already exists")
 
 
 @router.delete("/{deck_id}")

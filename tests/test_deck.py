@@ -74,3 +74,43 @@ def test_update_deck_success(client, access_token, deck):
     assert response_data["id"] == deck["id"]
     assert response_data["title"] == "Test Deck Update"
     assert response_data["description"] == deck["description"]
+
+
+def test_update_deck_duplicated_title(client, access_token, deck):
+    # Change code in service to check if the deck is itself when updating...
+
+    create_deck = client.post(
+        "/decks/",
+        headers={"Authorization": f"Bearer {access_token}"},
+        json={
+            "title": "Another Deck",
+            "description": "Used to test updating to duplicated title",
+        },
+    )
+
+    assert create_deck.status_code == 201
+    assert create_deck.json()["title"] == "Another Deck"
+
+    response = client.patch(
+        f"/decks/{deck['id']}",
+        headers={"Authorization": f"Bearer {access_token}"},
+        json={"title": create_deck.json()["title"]},
+    )
+
+    assert response.status_code == 409
+    assert response.json()["detail"] == "Deck already exists"
+
+
+def test_delete_deck_success(client, access_token, deck):
+    response = client.delete(
+        f"/decks/{deck['id']}", headers={"Authorization": f"Bearer {access_token}"}
+    )
+
+    assert response.status_code == 200
+
+    get_deck_response = client.get(
+        f"/decks/{deck['id']}", headers={"Authorization": f"Bearer {access_token}"}
+    )
+
+    assert get_deck_response.status_code == 404
+    assert get_deck_response.json()["detail"] == "Deck not found"
