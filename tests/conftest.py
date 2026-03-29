@@ -73,7 +73,7 @@ def deck(access_token, client):
 @pytest.fixture
 def flashcard(access_token, client, deck):
     response = client.post(
-        f"/decks/{deck['id']}/",
+        f"/decks/{deck['id']}/flashcards/",
         headers={"Authorization": f"Bearer {access_token}"},
         json={"question": "What is 1+1", "answer": "2"},
     )
