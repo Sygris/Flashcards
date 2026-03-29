@@ -77,8 +77,6 @@ def test_update_deck_success(client, access_token, deck):
 
 
 def test_update_deck_duplicated_title(client, access_token, deck):
-    # Change code in service to check if the deck is itself when updating...
-
     create_deck = client.post(
         "/decks/",
         headers={"Authorization": f"Bearer {access_token}"},

@@ -59,9 +59,11 @@ class DeckService:
     def update_deck(self, deck_id: int, user_id: int, updates: DeckIn) -> Deck:
         deck = self._get_deck_by_id(deck_id, user_id)
 
-        if updates.title and self._deck_repository.get_user_deck_by_title(
+        existing_deck = self._deck_repository.get_user_deck_by_title(
             updates.title, user_id
-        ):
+        )
+
+        if updates.title and existing_deck and existing_deck.id != deck_id:
             raise ValueError("Deck already exists")
 
         updated_deck = self._deck_repository.update_deck(
