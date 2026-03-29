@@ -68,3 +68,17 @@ def deck(access_token, client):
         pytest.fail("Failed to create deck!")
 
     return response.json()
+
+
+@pytest.fixture
+def flashcard(access_token, client, deck):
+    response = client.post(
+        f"/decks/{deck['id']}/",
+        headers={"Authorization": f"Bearer {access_token}"},
+        json={"question": "What is 1+1", "answer": "2"},
+    )
+
+    if response.status_code != 201:
+        pytest.fail("Failed to create flashcard!")
+
+    return response.json()
