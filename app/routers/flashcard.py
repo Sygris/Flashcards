@@ -24,7 +24,7 @@ def create_flashcard(
     except LookupError:
         raise HTTPException(status_code=404, detail="Deck not found")
     except ValueError:
-        raise HTTPException(status_code=400, detail="Flashcard already exists")
+        raise HTTPException(status_code=409, detail="Flashcard already exists")
 
 
 @router.get("/", response_model=list[FlashcardOut], status_code=200)
@@ -52,7 +52,7 @@ def get_flashcard(
         raise HTTPException(status_code=404, detail="Deck or flashcard not found")
 
 
-@router.patch("/{flashcard_id}", response_model=FlashcardOut, status_code=201)
+@router.patch("/{flashcard_id}", response_model=FlashcardOut, status_code=200)
 def update_flashcard(
     deck_id: int,
     flashcard_id: int,
