@@ -13,7 +13,7 @@ from app.routers.flashcard import router as flashcardRouter
 async def lifespan(app: FastAPI):
     # Beginning of the application
     print("Starting API...")
-    create_tables()
+    # create_tables()
     print("Database has been initialised!")
     yield
     # End of the application
