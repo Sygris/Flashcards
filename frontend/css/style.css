@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  /* border: 1px solid red; */
+}
+
+html {
+  background-color: #f8f9fa;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  line-weight: 1.5;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button {
+  font: inherit;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+}
+
+.container--column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.left-side {
+  flex: 0 0 45%;
+}
+
+.right-side {
+  flex: 0 0 55%;
+}
+
+.logo {
+  color: #3f3f3f;
+  text-decoration: none;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.container--form {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  gap: 1rem;
+}
+
+.container--form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.container--form__fields input {
+  padding: 1rem;
+  background-color: #F2F6FC;
+  color: #b5b2bd;
+  border: solid 1px #b5b2bd;
+  border-radius: 8px;
+}
+
+.container--form__submit {
+  padding: 1rem;
+  background-color: #0077b6;
+  color: #f8f9fa;
+  font-size: 1.125rem;
+  border: 0px;
+  border-radius: 8px;
+}
