@@ -7,32 +7,30 @@
     <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
+    <header>
+      <nav>
+        <a href="#">Flashcards</a>
+      </nav>
+    </header>
     <main class="container">
-      <div class="container--column left-side">
-        <a href="#" class="logo">
-          Flashcards
-        </a>
-        <form class="container--form">
-          <div class="container--form__fields">
-            <label for="email">E-mail</label>
-            <input type="email" name="email" placeholder="example@gmail.com" required>
-          </div>
-
-          <div class="container--form__fields">
-            <label for="password">Password</label>
-            <input type="password" name="password" placeholder="* * * * * * * *" required>
-          </div>
-          
-          <button type="submit" class="container--form__submit">Log in</button>
-          
-          <!-- <div> -->
-          <!--   <input type="checkbox" name="remember_me" value="remember"> Remember me -->
-          <!--   <a href="#">Forgot password?</a> -->
-          <!-- </div> -->
-        </form>
+      <div class="greetings">
+        <h1>Welcome Back</h1>
+        <p class="text-secondary">Log in to your account</p>
       </div>
-      <div class="right-side">
-      </div>
+      <form class="container-form">
+        <div class="container-form-child">
+          <label for="email" class="text-secondary">EMAIL</label>
+          <input type="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="container-form-child">
+          <label for="password" class="text-secondary">PASSWORD</label>
+          <input type="password" name="password" id="password" placeholder="********" required>
+        </div>
+        <div class="container-form-child">
+          <button type="submit" class="primary-button">Log in</button>
+          <button type="button" class="secondary-button">Create Account</button>
+        </div>
+      </form>
     </main>
   </body>
 </html>
