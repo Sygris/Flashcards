@@ -35,6 +35,10 @@ button {
   cursor: pointer;
 }
 
+main {
+  height: 100vh;
+}
+
 .container {
   display: flex;
   flex-direction: row;
@@ -51,11 +55,11 @@ button {
 }
 
 .left-side {
-  flex: 0 0 45%;
+  flex: 0 0 50%;
 }
 
 .right-side {
-  flex: 0 0 55%;
+  flex: 0 0 50%;
 }
 
 .logo {
@@ -81,7 +85,6 @@ button {
 .container--form__fields input {
   padding: 1rem;
   background-color: #F2F6FC;
-  color: #b5b2bd;
   border: solid 1px #b5b2bd;
   border-radius: 8px;
 }
@@ -93,4 +96,20 @@ button {
   font-size: 1.125rem;
   border: 0px;
   border-radius: 8px;
+}
+
+.right-side {
+  background-color: #0077b6;
+  border-radius: 35% 0 0 35%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #f8f9fa;
 }
