@@ -25,7 +25,7 @@ def test_signup_duplicate_email(db_setup, client):
 
 def test_login_success(registered_user, client):
     login_response = client.post(
-        "/auth/login", json={"email": "user@gmail.com", "password": "password"}
+        "/auth/login", data={"username": "user@gmail.com", "password": "password"}
     )
 
     assert login_response.status_code == 200
@@ -36,7 +36,7 @@ def test_login_success(registered_user, client):
 
 def test_login_wrong_password(registered_user, client):
     login_response = client.post(
-        "/auth/login", json={"email": "user@gmail.com", "password": "wrongPWD"}
+        "/auth/login", data={"username": "user@gmail.com", "password": "wrongPWD"}
     )
 
     assert login_response.status_code == 400
@@ -46,7 +46,7 @@ def test_login_wrong_password(registered_user, client):
 
 def test_login_wrong_email(registered_user, client):
     login_response = client.post(
-        "/auth/login", json={"email": "useer@gmail.com", "password": "password"}
+        "/auth/login", data={"username": "useer@gmail.com", "password": "password"}
     )
 
     assert login_response.status_code == 400

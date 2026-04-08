@@ -47,7 +47,7 @@ def registered_user(db_setup, client):
 @pytest.fixture
 def access_token(registered_user, client):
     login_response = client.post(
-        "/auth/login", json={"email": "user@gmail.com", "password": "password"}
+        "/auth/login", data={"username": "user@gmail.com", "password": "password"}
     )
 
     if login_response.status_code != 200:
