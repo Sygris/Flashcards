@@ -1,27 +1,26 @@
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
+from fastapi.middleware.cors import CORSMiddleware
 
-from app.db.utils.init_db import create_tables
 from app.routers.auth import router as authRouter
 from app.routers.user import router as userRouter
 from app.routers.deck import router as deckRouter
 from app.routers.flashcard import router as flashcardRouter
 
 
-# Controls the life cycle of the app
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Beginning of the application
-    print("Starting API...")
-    # create_tables()
-    print("Database has been initialised!")
-    yield
-    # End of the application
-    print("Closing API...")
-
-
 # Create the application
-app = FastAPI(lifespan=lifespan)
+app = FastAPI()
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Add the routers to the application
 app.include_router(authRouter, prefix="/auth", tags=["auth"])
