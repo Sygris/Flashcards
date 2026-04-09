@@ -13,7 +13,7 @@ class Config(BaseSettings):
 
     jwt_secret: str = ""
     jwt_algorithm: str = ""
-    access_token_expire_minutes: int = 30
+    access_token_expire_minutes: int = 10
 
     # It builds the postgresql connection string
     @property

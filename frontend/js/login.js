@@ -19,6 +19,14 @@ form.addEventListener("submit", async (e) => {
     body: body,
   });
 
+  if (!response.ok) {
+    console.log("Get an error message in the page");
+    alert("Invalid email or password");
+  }
+
   const data = await response.json();
-  console.log(data);
+  localStorage.setItem("token", data.token);
+
+  window.location.href = "dashboard.html";
+  console.log(localStorage.getItem("token"));
 });
