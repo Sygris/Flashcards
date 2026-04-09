@@ -41,7 +41,7 @@ def test_login_wrong_password(registered_user, client):
 
     assert login_response.status_code == 400
     response_data = login_response.json()
-    assert response_data["detail"] == "Please check your Credentials"
+    assert response_data["detail"] == "Invalid email or password"
 
 
 def test_login_wrong_email(registered_user, client):
@@ -51,4 +51,4 @@ def test_login_wrong_email(registered_user, client):
 
     assert login_response.status_code == 400
     response_data = login_response.json()
-    assert response_data["detail"] == "Please create an Account"
+    assert response_data["detail"] == "Invalid email or password"

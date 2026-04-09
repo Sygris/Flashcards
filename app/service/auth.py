@@ -17,7 +17,7 @@ class AuthService:
         user = self._user_repository.get_user_by_email(login_details.email)
 
         if not user:
-            raise HTTPException(status_code=400, detail="Please create an Account")
+            raise HTTPException(status_code=400, detail="Invalid email or password")
 
         if HashHelper.verify_password(login_details.password, user.password):
             payload = {"sub": str(user.id), "role": user.role.value}
@@ -32,7 +32,7 @@ class AuthService:
 
             raise HTTPException(status_code=500, detail="Unable to process request")
 
-        raise HTTPException(status_code=400, detail="Please check your Credentials")
+        raise HTTPException(status_code=400, detail="Invalid email or password")
 
     def logout(self, user_id: int):
         user = self._user_repository.get_user_by_id(user_id)

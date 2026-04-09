@@ -20,5 +20,5 @@ form.addEventListener("submit", async (e) => {
   });
 
   const data = await response.json();
-  console.log(data["detail"]);
+  console.log(data);
 });
