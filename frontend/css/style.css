@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 *,
 *::before,
@@ -16,7 +16,7 @@ button {
 }
 
 :root {
-  --bg-page: #111;
+  --bg-page: #1a1a1a;
   --bg-surface: #1e1e1e;
   --bg-input: #252525;
   --border: #2e2e2e;
@@ -44,10 +44,20 @@ header {
   border-bottom: 1px solid var(--border);
 }
 
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 nav a {
   text-decoration: none;
   color: var(--text-primary);
   font-weight: bold;
+}
+
+.log-out {
+  color: var(--text-muted);
 }
 
 .container {
@@ -88,6 +98,11 @@ nav a {
   color: var(--text-secondary);
   border: 1px solid var(--border);
   border-radius: 10px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8rem;
 }
 
 .primary-button {

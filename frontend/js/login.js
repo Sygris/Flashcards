@@ -21,12 +21,12 @@ form.addEventListener("submit", async (e) => {
 
   if (!response.ok) {
     console.log("Get an error message in the page");
-    alert("Invalid email or password");
+    return;
   }
 
   const data = await response.json();
   localStorage.setItem("token", data.token);
+  localStorage.setItem("refresh_token", data.refresh_token);
 
   window.location.href = "dashboard.html";
-  console.log(localStorage.getItem("token"));
 });
