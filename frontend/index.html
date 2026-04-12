@@ -1,49 +1,96 @@
+<!-- <!doctype html> -->
+<!-- <html lang="en"> -->
+<!--   <head> -->
+<!--     <meta charset="UTF-8" /> -->
+<!--     <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+<!--     <title>Flashcards - Login</title> -->
+<!--     <link href="css/style.css" rel="stylesheet" /> -->
+<!--   </head> -->
+<!--   <body> -->
+<!--     <header> -->
+<!--       <nav> -->
+<!--         <a href="#">Flashcards</a> -->
+<!--       </nav> -->
+<!--     </header> -->
+<!--     <main class="container"> -->
+<!--       <div class="greetings"> -->
+<!--         <h1>Welcome back</h1> -->
+<!--         <p class="text-secondary">Log in to your account</p> -->
+<!--       </div> -->
+<!--       <form class="container-form" id="form"> -->
+<!--         <div class="container-form-child"> -->
+<!--           <label for="email" class="text-secondary">EMAIL</label> -->
+<!--           <input -->
+<!--             type="email" -->
+<!--             name="email" -->
+<!--             id="email" -->
+<!--             placeholder="your@email.com" -->
+<!--             required -->
+<!--           /> -->
+<!--         </div> -->
+<!--         <div class="container-form-child"> -->
+<!--           <label for="password" class="text-secondary">PASSWORD</label> -->
+<!--           <input -->
+<!--             type="password" -->
+<!--             name="password" -->
+<!--             id="password" -->
+<!--             placeholder="********" -->
+<!--             required -->
+<!--           /> -->
+<!--         </div> -->
+<!--         <p id="login-fail">Wrong email or password</p> -->
+<!--         <div class="container-form-child"> -->
+<!--           <button type="submit" class="primary-button">Log in</button> -->
+<!--           <button type="button" class="secondary-button">Create Account</button> -->
+<!--         </div> -->
+<!--       </form> -->
+<!--     </main> -->
+<!--   </body> -->
+<!--   <script src="js/login.js"></script> -->
+<!-- </html> -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Flashcards - Login</title>
+    <title>Flashcards</title>
     <link href="css/style.css" rel="stylesheet" />
   </head>
   <body>
     <header>
       <nav>
-        <a href="#">Flashcards</a>
+        <a href="#" class="brand-logo"> Flashcards </a>
+        <a href="#" class="logout"> Log out </a>
       </nav>
     </header>
     <main class="container">
-      <div class="greetings">
-        <h1>Welcome back</h1>
+      <div class="page-header">
+        <h1 class="page-title">Welcome back</h1>
         <p class="text-secondary">Log in to your account</p>
       </div>
-      <form class="container-form" id="form">
-        <div class="container-form-child">
-          <label for="email" class="text-secondary">EMAIL</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="your@email.com"
-            required
-          />
+      <form>
+        <div class="form-child">
+          <div class="input-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="example@example.com"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required />
+          </div>
+          <p class="error-message">Wrong email or password</p>
         </div>
-        <div class="container-form-child">
-          <label for="password" class="text-secondary">PASSWORD</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="********"
-            required
-          />
-        </div>
-        <div class="container-form-child">
-          <button type="submit" class="primary-button">Log in</button>
-          <button type="button" class="secondary-button">Create Account</button>
+        <div class="form-child">
+          <button type="submit" class="button-primary">Log in</button>
+          <button type="button" class="button-secondary">Create Account</button>
         </div>
       </form>
     </main>
   </body>
-  <script src="js/login.js"></script>
 </html>

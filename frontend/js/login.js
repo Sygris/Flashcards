@@ -21,6 +21,7 @@ form.addEventListener("submit", async (e) => {
 
   if (!response.ok) {
     console.log("Get an error message in the page");
+    ErrorMessage();
     return;
   }
 
@@ -30,3 +31,13 @@ form.addEventListener("submit", async (e) => {
 
   window.location.href = "dashboard.html";
 });
+
+function ErrorMessage() {
+  passwordInput.value = "";
+
+  const errorMessage = document.getElementById("login-fail");
+  errorMessage.style.display = "block";
+
+  emailInput.style.outline = "1px solid var(--error)";
+  passwordInput.style.outline = "1px solid var(--error)";
+}
