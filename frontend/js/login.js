@@ -1,4 +1,4 @@
-const form = document.getElementById("form");
+const form = document.getElementById("login-form");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 
@@ -38,6 +38,6 @@ function ErrorMessage() {
   const errorMessage = document.getElementById("login-fail");
   errorMessage.style.display = "block";
 
-  emailInput.style.outline = "1px solid var(--error)";
-  passwordInput.style.outline = "1px solid var(--error)";
+  emailInput.classList.add("error-outline");
+  passwordInput.classList.add("error-outline");
 }

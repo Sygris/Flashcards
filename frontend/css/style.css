@@ -1,5 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
+:root {
+  --bg-page: #1a1a1a;
+  --bg-surface: #1e1e1e;
+  --bg-input: #252525;
+  --border: #2e2e2e;
+  --border-light: #444;
+  --text-primary: #f0f0f0;
+  --text-secondary: #888;
+  --text-muted: #666;
+  --error: #fe654f;
+}
+
 /* START RESET */
 *,
 *::before,
@@ -33,18 +45,6 @@ input {
 
 /* END RESET */
 
-:root {
-  --bg-page: #1a1a1a;
-  --bg-surface: #1e1e1e;
-  --bg-input: #252525;
-  --border: #2e2e2e;
-  --border-light: #444;
-  --text-primary: #f0f0f0;
-  --text-secondary: #888;
-  --text-muted: #666;
-  --error: #fe654f;
-}
-
 body {
   height: 100vh;
   background-color: var(--bg-page);
@@ -60,8 +60,13 @@ body {
 }
 
 .error-message {
+  display: none;
   color: var(--error);
   font-weight: 300;
+}
+
+.error-outline {
+  border: 1px solid var(--error);
 }
 
 .button-primary {
