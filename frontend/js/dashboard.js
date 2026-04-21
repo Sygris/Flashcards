@@ -18,6 +18,27 @@ async function refreshToken() {
   loadDecks(true);
 }
 
+function generateDecksCard(decks) {
+  const container = document.getElementById("deck-container");
+
+  container.innerHTML = decks
+    .map(
+      (deck) =>
+        `
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">${deck.title}</h3>
+          <p classs="text-secondary">${deck.description}</p>
+        </div>
+        <div>
+          <span class="card-badge">${deck.flashcard_count} cards</span>
+        </div>
+      </div>
+    `,
+    )
+    .join("");
+}
+
 async function loadDecks(retried = false) {
   try {
     const response = await fetch("http://localhost:8000/decks/", {
@@ -37,6 +58,7 @@ async function loadDecks(retried = false) {
     const decks = await response.json();
     const deccksCountText = document.getElementById("decks-count");
     deccksCountText.textContent = decks.length + " decks";
+    generateDecksCard(decks);
   } catch (error) {
     console.error(error.message);
   }
