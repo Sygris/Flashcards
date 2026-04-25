@@ -2,8 +2,8 @@
 
 :root {
   --bg-page: #1a1a1a;
-  --bg-surface: #1e1e1e;
-  --bg-input: #252525;
+  --bg-surface: #252525;
+  --bg-input: #1e1e1e;
   --border: #2e2e2e;
   --border-light: #444;
   --text-primary: #f0f0f0;
@@ -57,6 +57,12 @@ body {
 
 .text-secondary {
   color: var(--text-secondary);
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .error-message {
@@ -137,4 +143,18 @@ form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+/* CARDD */
+#deck-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card {
+  display: flex;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  background-color: var(--bg-surface);
 }
